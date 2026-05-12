@@ -1,0 +1,83 @@
+/*
+ * styles/globals.css
+ *
+ * This is the ONLY CSS file you need to write manually.
+ * Everything else is handled by Tailwind utility classes directly in your JSX.
+ *
+ * This file does three things:
+ * 1. Loads all Tailwind CSS layers (base resets, component classes, utilities)
+ * 2. Defines a reusable `.section-container` class using @apply
+ * 3. Sets global HTML behavior like smooth scrolling
+ */
+
+/*
+ * @tailwind base
+ * Injects Tailwind's "Preflight" — a set of CSS resets based on modern-normalize.
+ * It removes browser-default margins, normalizes heading sizes, sets box-sizing
+ * to border-box, and more. This ensures your site looks consistent across browsers.
+ */
+@tailwind base;
+
+/*
+ * @tailwind components
+ * Injects any component-layer classes. If you use @layer components { ... }
+ * anywhere in your CSS (like the .section-container below), it ends up here.
+ */
+@tailwind components;
+
+/*
+ * @tailwind utilities
+ * Injects all the utility classes that Tailwind generates — things like
+ * bg-navy-900, text-xl, flex, grid, p-4, etc. This is the bulk of Tailwind.
+ */
+@tailwind utilities;
+
+/*
+ * COMPONENT LAYER — Custom reusable classes
+ *
+ * @layer components tells Tailwind that these are component-level classes.
+ * This gives them the correct specificity — they come after base resets but
+ * before utility classes, so utilities can still override them.
+ *
+ * WHY USE @apply?
+ * @apply lets you use Tailwind utility names inside regular CSS rules.
+ * This is useful for patterns you repeat on EVERY page — like the content
+ * container width — so you only define it once.
+ */
+@layer components {
+  /*
+   * .section-container
+   * The standard wrapper for all content sections on the site.
+   * - max-w-7xl  → limits the content to 1280px wide (looks good on large screens)
+   * - mx-auto    → centers the container horizontally on the page
+   * - px-4       → 16px horizontal padding on mobile (prevents content from touching screen edges)
+   * - sm:px-6    → 24px horizontal padding on tablets (640px+)
+   * - lg:px-8    → 32px horizontal padding on desktops (1024px+)
+   *
+   * Usage in JSX: <div className="section-container"> ... </div>
+   */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/*
+ * GLOBAL BASE STYLES
+ *
+ * @layer base overrides Tailwind's base layer.
+ * Here we set the page-wide scroll behavior so that anchor link clicks
+ * (e.g., <a href="#services">) scroll smoothly instead of jumping instantly.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /*
+   * Set a consistent default body font color.
+   * text-gray-900 is a near-black color (#111827) — readable and professional.
+   */
+  body {
+    @apply text-gray-900 antialiased;
+  }
+}
