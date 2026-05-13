@@ -394,22 +394,33 @@ interface FormFieldProps {
 }
 
 function FormField({ label, required, error, children }: FormFieldProps) {
+  // Best-effort: derive `htmlFor` from the child input's `id` so the label
+  // is properly associated with its control for screen readers.
+  // (Existing inputs in this file all carry matching `name` + `id` props.)
+  const child = children as React.ReactElement<{ id?: string; name?: string }>;
+  const inputId = child?.props?.id ?? child?.props?.name;
+
   return (
     <div className="flex flex-col gap-1">
-      {/* Label — htmlFor should match the input's id for accessibility */}
-      <label className="text-sm font-medium text-gray-700">
+      <label htmlFor={inputId} className="text-body-sm font-medium text-gray-700">
         {label}
-        {/* Required asterisk — only shown if `required` is true */}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
+        {required && (
+          <>
+            <span aria-hidden="true" className="text-feedback-danger ml-0.5">*</span>
+            <span className="sr-only"> (required)</span>
+          </>
+        )}
       </label>
 
-      {/* The actual input/textarea is injected here via {children} */}
       {children}
 
-      {/* Error message — only shown when `error` string is provided */}
+      {/* Error region — role="alert" announces validation problems to AT */}
       {error && (
-        <div className="flex items-center gap-1.5 text-red-500 text-xs">
-          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+        <div
+          role="alert"
+          className="flex items-center gap-1.5 text-feedback-danger text-caption"
+        >
+          <AlertCircle aria-hidden="true" className="w-3.5 h-3.5 flex-shrink-0" />
           <span>{error}</span>
         </div>
       )}

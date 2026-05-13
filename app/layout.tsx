@@ -1,68 +1,43 @@
 /**
  * app/layout.tsx
  *
- * THE ROOT LAYOUT — This is the most important file in the Next.js App Router.
- * It wraps EVERY page on the site. Think of it as the outer HTML shell.
+ * THE ROOT LAYOUT — wraps EVERY page on the site. This is the outer HTML shell.
  *
- * WHAT IS A ROOT LAYOUT?
+ * RESPONSIBILITIES
  * -----------------------------------------------------------------------
- * Every website needs <html> and <body> tags — these live here.
- * The `{children}` prop represents the current page's content.
- * When a user visits /about, Next.js renders:
+ * 1. Loads the global stylesheet (Tailwind + design tokens)
+ * 2. Configures the `Inter` font through next/font (zero-CLS web fonts)
+ * 3. Exports SEO metadata, Open Graph defaults, and the viewport config
+ * 4. Renders the persistent shell: Navbar — <main> — Footer
+ * 5. Renders the keyboard-only "Skip to main content" link, which is the
+ *    very first focusable element so screen-reader + keyboard users can
+ *    bypass the navigation on every page.
  *
- *   <html>
- *     <body>
- *       <Navbar />       ← from this file
- *       <main>
- *         [About page content]  ← {children}
- *       </main>
- *       <Footer />       ← from this file
- *     </body>
- *   </html>
- *
- * WHY EXPORT `metadata`?
- * -----------------------------------------------------------------------
- * The `metadata` export tells Next.js what to put in <head> tags:
- * - <title> → browser tab title, Google search result title
- * - <meta name="description"> → Google search result description (SEO)
- * Exporting it as a constant from a Server Component is the Next.js way.
- * Individual pages can override these with their own `metadata` export.
- *
- * WHY USE next/font?
- * -----------------------------------------------------------------------
- * next/font/google loads Google Fonts at BUILD TIME — not in the browser.
- * This means:
- * - Zero layout shift (font loads before the page renders)
- * - No external network request from the browser (better privacy, faster load)
- * - The font CSS is automatically injected via a CSS variable
+ * SERVER COMPONENT — no client state lives here.
  */
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-// ── FONT SETUP ────────────────────────────────────────────────────────────────
-// Inter is a clean, modern sans-serif font widely used in professional web UIs.
-// `subsets: ["latin"]` loads only the Latin character set — smaller file size.
-// `variable: "--font-inter"` creates a CSS custom property that Tailwind reads.
-// We configured tailwind.config.ts to use `var(--font-inter)` as the default font.
+// ── FONT ─────────────────────────────────────────────────────────────────────
+// next/font/google fetches Inter at BUILD time, self-hosts it, and exposes a
+// CSS variable. Result: no FOIT/FOUT, no external network request, no CLS.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap", // "swap" shows a fallback font immediately, swaps to Inter when loaded
+  display: "swap",
 });
 
 // ── SEO METADATA ─────────────────────────────────────────────────────────────
-// These values appear in the browser tab and in Google search results.
-// Individual pages can extend or override these by exporting their own `metadata`.
+// `metadataBase` resolves relative URLs in openGraph.images, etc.
+// Replace the placeholder when the production domain is final.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cromnia.com"),
   title: {
-    // `template` automatically applies to all child pages.
-    // e.g., the About page (title: "About Us") becomes "About Us | CROMNIA"
     template: "%s | CROMNIA",
-    // `default` is used when a page doesn't define its own title
     default: "CROMNIA | Contract Research Organization",
   },
   description:
@@ -81,55 +56,65 @@ export const metadata: Metadata = {
     "regulatory affairs",
     "medical writing",
   ],
-  // openGraph data powers social media previews (LinkedIn, Twitter, etc.)
   openGraph: {
     title: "CROMNIA | Contract Research Organization",
     description:
       "Reliable clinical research services in Turkey. Site selection, trial management, regulatory affairs, and more.",
     type: "website",
     locale: "en_US",
+    siteName: "CROMNIA",
   },
+  // Tells crawlers and assistive tech the canonical language
+  alternates: {
+    canonical: "/",
+  },
+  authors: [{ name: "CROMNIA" }],
+  // Generator hint can leak Next.js version — turn off in production
+  generator: undefined,
 };
 
-// ── ROOT LAYOUT COMPONENT ─────────────────────────────────────────────────────
-// This is a React Server Component (no "use client" needed).
-// `children` receives the currently active page component.
+// ── VIEWPORT ─────────────────────────────────────────────────────────────────
+// Split out from `metadata` per Next.js 14 conventions. Controls how the
+// browser sizes the layout and which theme color the OS uses for the
+// browser chrome (mobile address bar, etc.).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // The brand navy — matches the navbar so the OS chrome blends in.
+  themeColor: "#0A1628",
+  colorScheme: "light",
+};
+
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode; // ReactNode = anything React can render (elements, text, null, etc.)
+  children: React.ReactNode;
 }) {
   return (
-    // `lang="en"` tells browsers and screen readers the page language
-    // `inter.variable` applies the CSS variable --font-inter to the HTML element
-    // so Tailwind's font-sans class (configured in tailwind.config.ts) picks it up
     <html lang="en" className={inter.variable}>
-      {/*
-       * antialiased → enables font smoothing for crisper text rendering on most displays
-       * min-h-screen → ensures the body is at least as tall as the viewport,
-       *                preventing the footer from floating up on short pages
-       * flex flex-col → makes the body a vertical flex container
-       *                 so we can push the footer to the bottom on short pages
-       */}
-      <body className="antialiased min-h-screen flex flex-col bg-gray-50">
+      <body className="antialiased min-h-screen flex flex-col bg-surface-subtle">
 
-        {/* Navbar renders at the top of EVERY page */}
+        {/* ── SKIP LINK ────────────────────────────────────────────────────
+            Hidden until focused. Lets keyboard + screen-reader users jump
+            past the navbar straight to the page content on every route.
+        ─────────────────────────────────────────────────────────────────── */}
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
+
         <Navbar />
 
         {/*
-         * <main> is the semantic HTML element for the primary content of a page.
-         * flex-1 → this is a flexbox shorthand for flex-grow: 1
-         * It tells <main> to expand and fill all available vertical space.
-         * This pushes the Footer to the very bottom of the page — even on pages
-         * with very little content.
+         * `id="main-content"` is the anchor for the skip link above.
+         * `tabIndex={-1}` lets us programmatically focus <main> after the
+         *   jump without making it a regular tab stop.
+         * `role="main"` is implicit on <main>, but explicit doesn't hurt.
          */}
-        <main className="flex-1">
+        <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
           {children}
         </main>
 
-        {/* Footer renders at the bottom of EVERY page */}
         <Footer />
-
       </body>
     </html>
   );

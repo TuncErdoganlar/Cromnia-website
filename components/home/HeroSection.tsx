@@ -66,10 +66,12 @@ export default function HeroSection() {
         </div>
 
         {/* ── MAIN HEADLINE ─────────────────────────────────────────────────
-            The company name in the largest possible size — immediately recognizable.
-            text-7xl on desktop creates a dominant visual anchor.
+            text-display → semantic token from tailwind.config.ts.
+            Ships a clamp(3rem … 4.75rem) so it scales fluidly across every
+            breakpoint instead of jumping at the 640/768px thresholds.
+            Also bakes in lineHeight: 1.05 and tracking-tight automatically.
         ──────────────────────────────────────────────────────────────────────── */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight mb-6">
+        <h1 className="text-display text-content-inverted mb-6">
           CROMNIA
         </h1>
 

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:a11y": "next lint --dir app --dir components"
   },
   "dependencies": {
     "next": "14.2.5",

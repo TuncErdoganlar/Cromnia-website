@@ -81,9 +81,14 @@ export default function Navbar() {
     // ── OUTER NAV ELEMENT ───────────────────────────────────────────────────
     // sticky top-0 → the navbar stays at the top of the viewport as you scroll
     // z-50         → high z-index ensures navbar stays above all other content
-    // bg-navy-900  → deep navy background matching the brand
-    // shadow-lg    → subtle drop shadow to visually separate navbar from content
-    <nav className="sticky top-0 z-50 bg-navy-900 shadow-lg">
+    // bg-surface-inverted → dark brand surface (semantic token = navy-900)
+    // shadow-elev-3 → semantic elevation token (was shadow-lg)
+    // aria-label tells AT this is the "primary" site nav, distinct from
+    // the footer nav landmark below.
+    <nav
+      aria-label="Primary"
+      className="sticky top-0 z-50 bg-surface-inverted shadow-elev-3"
+    >
       <div className="section-container">
         {/* ── NAVBAR INNER ROW ──────────────────────────────────────────────
             flex            → makes this a flexbox row
@@ -126,26 +131,31 @@ export default function Navbar() {
              * React uses it internally to track which items changed when
              * the component re-renders. Use a unique value — the href is perfect here.
              */}
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`
-                  px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
-                  ${
-                    isActive(link.href)
-                      // Active link: bright accent color + subtle background highlight
-                      ? "text-sky-400 bg-white/10"
-                      // Inactive link: muted gray, brightens on hover
-                      : "text-gray-300 hover:text-white hover:bg-white/5"
-                  }
-                `}
-              >
-                {link.label}
-              </Link>
-            ))}
-
-            {/* Contact button — styled differently as a CTA button in the navbar */}
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  // aria-current="page" is the WCAG-recommended way to expose
+                  // the active nav link to screen readers (NVDA, JAWS, VoiceOver).
+                  aria-current={active ? "page" : undefined}
+                  className={`
+                    px-4 py-2 rounded-control text-body-sm font-medium transition-all duration-200
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted
+                    ${
+                      active
+                        // Active link: bright accent + subtle highlight
+                        ? "text-brand-accent bg-white/10"
+                        // Inactive: muted, brightens on hover
+                        : "text-gray-300 hover:text-white hover:bg-white/5"
+                    }
+                  `}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           {/* ── MOBILE MENU TOGGLE BUTTON ────────────────────────────────────
@@ -157,9 +167,11 @@ export default function Navbar() {
               aria-label    → describes the button for screen readers.
           ─────────────────────────────────────────────────────────────────── */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
+            className="md:hidden p-2 rounded-control text-gray-300 hover:text-white hover:bg-white/10 transition-colors
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-menu"
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {/*
@@ -186,26 +198,31 @@ export default function Navbar() {
           border-t border-white/10 → subtle dividing line between navbar and menu
       ─────────────────────────────────────────────────────────────────── */}
       {isMenuOpen && (
-        <div className="md:hidden bg-navy-800 border-t border-white/10">
+        <div id="mobile-nav-menu" className="md:hidden bg-surface-inverted-soft border-t border-white/10">
           <div className="section-container py-3 flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                // When a mobile link is clicked, close the menu
-                onClick={() => setIsMenuOpen(false)}
-                className={`
-                  px-4 py-3 rounded-md text-sm font-medium transition-colors
-                  ${
-                    isActive(link.href)
-                      ? "text-sky-400 bg-white/10"
-                      : "text-gray-300 hover:text-white hover:bg-white/5"
-                  }
-                `}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  // When a mobile link is clicked, close the menu
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`
+                    px-4 py-3 rounded-control text-body-sm font-medium transition-colors
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted-soft
+                    ${
+                      active
+                        ? "text-brand-accent bg-white/10"
+                        : "text-gray-300 hover:text-white hover:bg-white/5"
+                    }
+                  `}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

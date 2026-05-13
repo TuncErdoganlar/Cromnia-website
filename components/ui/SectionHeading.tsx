@@ -52,17 +52,17 @@ export default function SectionHeading({
     <div className={`mb-12 ${centered ? "text-center" : ""}`}>
 
       {/* ── MAIN HEADING ──────────────────────────────────────────────────
-          text-3xl     → 30px font size on mobile
-          md:text-4xl  → 36px font size on tablets and larger (768px+)
-          font-bold    → bold weight for visual hierarchy
-          tracking-tight → slightly tighter letter-spacing for headings
+          text-h2  → semantic typography token from tailwind.config.ts.
+                     Ships its own line-height, letter-spacing, and bold weight,
+                     and uses a clamp() that scales fluidly across breakpoints
+                     so we no longer need text-3xl + md:text-4xl pairs.
           The color switches based on the `light` prop:
-          - light=true  → text-white (for dark navy backgrounds)
-          - light=false → text-gray-900 (near-black, for white/light backgrounds)
+          - light=true  → text-content-inverted (for dark navy backgrounds)
+          - light=false → text-content-primary  (for white/light backgrounds)
       ─────────────────────────────────────────────────────────────────── */}
       <h2
-        className={`text-3xl md:text-4xl font-bold tracking-tight ${
-          light ? "text-white" : "text-gray-900"
+        className={`text-h2 ${
+          light ? "text-content-inverted" : "text-content-primary"
         }`}
       >
         {title}
@@ -83,9 +83,10 @@ export default function SectionHeading({
           If `light`, we use a slightly lighter sky variant for better visibility on dark.
       ─────────────────────────────────────────────────────────────────── */}
       <div
-        className={`mt-3 h-1 w-16 rounded-full ${
-          light ? "bg-sky-400" : "bg-sky-400"
-        } ${centered ? "mx-auto" : ""}`}
+        aria-hidden="true"
+        className={`mt-3 h-1 w-16 rounded-pill bg-brand-accent ${
+          centered ? "mx-auto" : ""
+        }`}
       />
 
       {/* ── OPTIONAL SUBTITLE ─────────────────────────────────────────────
@@ -99,8 +100,8 @@ export default function SectionHeading({
       ─────────────────────────────────────────────────────────────────── */}
       {subtitle && (
         <p
-          className={`mt-4 text-lg leading-relaxed ${
-            light ? "text-gray-300" : "text-gray-600"
+          className={`mt-4 text-body-lg ${
+            light ? "text-content-on-inverted" : "text-content-secondary"
           }`}
         >
           {subtitle}

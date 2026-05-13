@@ -54,26 +54,24 @@ interface ButtonProps {
 // - transition-all → smooth color transitions on hover (0.15s by default)
 // - duration-200  → 200ms transition speed — fast enough to feel snappy
 // - focus:outline-none + focus:ring-2 → accessibility: visible keyboard focus ring
+// `focus-visible` is used (not `focus`) so the ring only appears for keyboard
+// users — preventing the ring from flashing on mouse click while keeping it
+// available for accessibility.
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 font-semibold py-3 px-6 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-500 disabled:opacity-50 disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 text-body-sm font-semibold py-3 px-6 rounded-control transition-all duration-200 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-accent " +
+  "disabled:opacity-50 disabled:cursor-not-allowed";
 
 // ── VARIANT STYLES ───────────────────────────────────────────────────────────
 const variantStyles = {
-  // Primary: solid filled button
-  // bg-navy-500   → navy blue background
-  // hover:bg-navy-600 → slightly darker on hover
-  // text-white    → white text for contrast on dark background
-  // shadow-md     → subtle shadow to lift the button visually
-  // hover:shadow-lg → grows on hover for a pressed-button feel
+  // Primary: solid filled button (brand-primary background, white text).
+  // shadow-elev-2 → semantic shadow token; rises to elev-3 on hover.
   primary:
-    "bg-navy-500 hover:bg-navy-600 text-white shadow-md hover:shadow-lg",
+    "bg-brand-primary hover:bg-brand-primary-hover text-content-inverted shadow-elev-2 hover:shadow-elev-3",
 
-  // Secondary: outlined ghost button
-  // border-2 border-navy-500 → 2px navy border
-  // text-navy-500             → matching navy text
-  // hover:bg-navy-500 hover:text-white → fills on hover (inverts colors)
+  // Secondary: outlined ghost button that fills with brand color on hover.
   secondary:
-    "border-2 border-navy-500 text-navy-500 hover:bg-navy-500 hover:text-white bg-transparent",
+    "border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-content-inverted bg-transparent",
 };
 
 /**

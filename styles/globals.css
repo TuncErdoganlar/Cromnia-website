@@ -1,83 +1,136 @@
 /*
  * styles/globals.css
  *
- * This is the ONLY CSS file you need to write manually.
- * Everything else is handled by Tailwind utility classes directly in your JSX.
+ * The ONLY hand-written stylesheet in the project.
  *
- * This file does three things:
- * 1. Loads all Tailwind CSS layers (base resets, component classes, utilities)
- * 2. Defines a reusable `.section-container` class using @apply
- * 3. Sets global HTML behavior like smooth scrolling
+ * It does five things:
+ *   1. Loads Tailwind's three layers (base / components / utilities)
+ *   2. Defines DESIGN-TOKEN CSS VARIABLES on :root that Tailwind reads
+ *      through the semantic colors in tailwind.config.ts
+ *      (brand-primary, surface-default, content-primary, …).
+ *      This single source of truth means we can later add a `.dark` class
+ *      to <html> and swap them — without touching any component.
+ *   3. Declares the `.section-container` utility used by every section
+ *   4. Sets sensible base behavior (smooth scrolling, reduced-motion respect)
+ *   5. Provides accessibility helpers: visible focus rings + skip-to-content link
  */
 
-/*
- * @tailwind base
- * Injects Tailwind's "Preflight" — a set of CSS resets based on modern-normalize.
- * It removes browser-default margins, normalizes heading sizes, sets box-sizing
- * to border-box, and more. This ensures your site looks consistent across browsers.
- */
 @tailwind base;
-
-/*
- * @tailwind components
- * Injects any component-layer classes. If you use @layer components { ... }
- * anywhere in your CSS (like the .section-container below), it ends up here.
- */
 @tailwind components;
-
-/*
- * @tailwind utilities
- * Injects all the utility classes that Tailwind generates — things like
- * bg-navy-900, text-xl, flex, grid, p-4, etc. This is the bulk of Tailwind.
- */
 @tailwind utilities;
 
-/*
- * COMPONENT LAYER — Custom reusable classes
+/* ───────────────────────────────────────────────────────────────────────────
+ * DESIGN TOKENS
  *
- * @layer components tells Tailwind that these are component-level classes.
- * This gives them the correct specificity — they come after base resets but
- * before utility classes, so utilities can still override them.
+ * Values are written as three space-separated RGB channels so Tailwind can
+ * compose them with alpha modifiers (e.g. `bg-brand-primary/10`).
  *
- * WHY USE @apply?
- * @apply lets you use Tailwind utility names inside regular CSS rules.
- * This is useful for patterns you repeat on EVERY page — like the content
- * container width — so you only define it once.
- */
+ * Naming convention:
+ *   --color-<role>[-modifier]
+ *     role      = brand-primary | surface-default | content-primary | …
+ *     modifier  = hover | soft | inverted | etc.
+ * ─────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    /* Brand palette ----------------------------------------------------- */
+    --color-brand-primary: 37 99 235;          /* navy-500 #2563EB */
+    --color-brand-primary-hover: 29 78 216;    /* navy-600 #1D4ED8 */
+    --color-brand-accent: 56 189 248;          /* sky-400  #38BDF8 */
+    --color-brand-accent-soft: 224 242 254;    /* sky-100  #E0F2FE */
+
+    /* Surfaces (page + card backgrounds) -------------------------------- */
+    --color-surface-default: 255 255 255;      /* white  — cards on light pages */
+    --color-surface-subtle: 249 250 251;       /* gray-50 — page background     */
+    --color-surface-elevated: 255 255 255;     /* elevated card                 */
+    --color-surface-inverted: 10 22 40;        /* navy-900 — dark hero/footer   */
+    --color-surface-inverted-soft: 17 34 64;   /* navy-800 — softer dark        */
+
+    /* Content (text) ---------------------------------------------------- */
+    --color-content-primary: 17 24 39;         /* gray-900 — headings + body    */
+    --color-content-secondary: 75 85 99;       /* gray-600 — paragraph text     */
+    --color-content-muted: 107 114 128;        /* gray-500 — captions, helpers  */
+    --color-content-inverted: 255 255 255;     /* white on dark surfaces        */
+    --color-content-on-inverted: 209 213 219;  /* gray-300 on dark surfaces     */
+
+    /* Borders ----------------------------------------------------------- */
+    --color-border-subtle: 243 244 246;        /* gray-100 — card outlines      */
+    --color-border-default: 229 231 235;       /* gray-200 — input borders      */
+    --color-border-strong: 209 213 219;        /* gray-300                      */
+    --color-border-on-inverted: 255 255 255;   /* white at low opacity          */
+
+    /* Feedback ---------------------------------------------------------- */
+    --color-feedback-success: 34 197 94;       /* green-500                     */
+    --color-feedback-warning: 245 158 11;      /* amber-500                     */
+    --color-feedback-danger: 239 68 68;        /* red-500                       */
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * COMPONENT LAYER
+ * ─────────────────────────────────────────────────────────────────────── */
 @layer components {
   /*
-   * .section-container
-   * The standard wrapper for all content sections on the site.
-   * - max-w-7xl  → limits the content to 1280px wide (looks good on large screens)
-   * - mx-auto    → centers the container horizontally on the page
-   * - px-4       → 16px horizontal padding on mobile (prevents content from touching screen edges)
-   * - sm:px-6    → 24px horizontal padding on tablets (640px+)
-   * - lg:px-8    → 32px horizontal padding on desktops (1024px+)
-   *
-   * Usage in JSX: <div className="section-container"> ... </div>
+   * .section-container — the standard width-capped, centered wrapper
+   *   max-w-7xl  1280px
+   *   mx-auto    centered
+   *   responsive horizontal padding
    */
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  /*
+   * .skip-to-content — keyboard-only "Skip to main content" link.
+   * Visually hidden until focused, then anchors at top-left.
+   * Renders first in <body> so the very first Tab press lands on it.
+   */
+  .skip-to-content {
+    @apply sr-only fixed left-4 top-4 z-[100] inline-flex items-center
+           rounded-control bg-brand-primary px-4 py-2 text-sm font-semibold
+           text-white shadow-elev-3
+           focus:not-sr-only focus:outline-none;
+  }
 }
 
-/*
- * GLOBAL BASE STYLES
- *
- * @layer base overrides Tailwind's base layer.
- * Here we set the page-wide scroll behavior so that anchor link clicks
- * (e.g., <a href="#services">) scroll smoothly instead of jumping instantly.
- */
+/* ───────────────────────────────────────────────────────────────────────────
+ * BASE STYLES
+ * ─────────────────────────────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
-  /*
-   * Set a consistent default body font color.
-   * text-gray-900 is a near-black color (#111827) — readable and professional.
-   */
+  /* Respect users who request reduced motion (Windows, macOS, Linux all
+     surface this preference). Disables transitions/animations globally. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   body {
-    @apply text-gray-900 antialiased;
+    @apply text-content-primary antialiased;
+  }
+
+  /*
+   * Universal focus-visible ring.
+   * `focus-visible` (vs. `focus`) only shows the ring for keyboard users,
+   * never on mouse clicks — exactly the behavior WCAG asks for.
+   * Each interactive component can override this with its own ring style.
+   */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-brand-accent));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Suppress the default focus ring only when focus-visible takes over */
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 }

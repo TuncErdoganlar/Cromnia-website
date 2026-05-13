@@ -34,9 +34,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    // bg-navy-800 → dark navy footer background
-    // text-gray-300 → default light text color for the entire footer
-    <footer className="bg-navy-800 text-gray-300">
+    // bg-surface-inverted-soft → dark navy footer background (semantic token)
+    // text-gray-300            → default light text color for the entire footer
+    // role="contentinfo" is the implicit role of <footer> at the root level —
+    // we keep it explicit for clarity in assistive tech tooling.
+    <footer role="contentinfo" className="bg-surface-inverted-soft text-gray-300">
 
       {/* ── MAIN FOOTER CONTENT ─────────────────────────────────────────────
           py-16 → 64px vertical padding (breathing room)
@@ -74,9 +76,10 @@ export default function Footer() {
           </div>
 
           {/* ── COLUMN 2: QUICK LINKS ──────────────────────────────────────── */}
-          <div>
+          {/* nav landmark with aria-label distinguishes this from the primary nav */}
+          <nav aria-label="Footer navigation">
             {/* Section label */}
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-6">
+            <h3 className="text-white font-semibold text-caption uppercase tracking-wider mb-6">
               Quick Links
             </h3>
 
@@ -89,21 +92,27 @@ export default function Footer() {
                 { href: "/career", label: "Career" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (
-                <li key={link.href}>
+                /*
+                 * `group` on the <li> enables `group-hover:` utilities on the
+                 * dot span below. (Previously the class lived on no element,
+                 * so the dot's opacity-0 → opacity-100 transition never fired.)
+                 */
+                <li key={link.href} className="group">
                   <Link
                     href={link.href}
-                    // group + group-hover pattern: the parent <li> has `group`,
-                    // so hovering the <li> triggers `group-hover:` classes on children.
-                    // Here we use a simpler approach — directly hover the <a> tag.
-                    className="text-sm text-gray-400 hover:text-sky-400 hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1"
+                    className="text-body-sm text-gray-400 hover:text-brand-accent hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-2
+                               focus-visible:outline-none focus-visible:text-brand-accent focus-visible:translate-x-1"
                   >
-                    <span className="w-1 h-1 bg-sky-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span
+                      aria-hidden="true"
+                      className="w-1 h-1 bg-brand-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    />
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* ── COLUMN 3: CONTACT DETAILS ──────────────────────────────────── */}
           <div>

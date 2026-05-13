@@ -24,15 +24,15 @@ export default function CareerPage() {
   return (
     <>
       {/* Page banner */}
-      <div className="bg-navy-900 py-16 md:py-24">
+      <div className="bg-surface-inverted py-16 md:py-24">
         <div className="section-container">
-          <p className="text-sky-400 text-sm font-semibold uppercase tracking-wider mb-3">
+          <p className="text-eyebrow text-brand-accent uppercase mb-3">
             Opportunities
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-h1 text-content-inverted mb-4">
             Career
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl">
+          <p className="text-content-on-inverted text-body-lg max-w-2xl">
             Become part of a well-established professional team at the forefront
             of clinical research in Turkey.
           </p>

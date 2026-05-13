@@ -43,16 +43,16 @@ export default function AboutPage() {
           Career, Contact) — it visually separates them from the home page
           and reinforces navigation context ("you are on the About page").
       ──────────────────────────────────────────────────────────────────────── */}
-      <div className="bg-navy-900 py-16 md:py-24">
+      <div className="bg-surface-inverted py-16 md:py-24">
         <div className="section-container">
-          {/* Breadcrumb-style pre-label */}
-          <p className="text-sky-400 text-sm font-semibold uppercase tracking-wider mb-3">
+          {/* Breadcrumb-style pre-label (text-eyebrow ships uppercase tracking) */}
+          <p className="text-eyebrow text-brand-accent uppercase mb-3">
             Company
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-h1 text-content-inverted mb-4">
             About Us
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl">
+          <p className="text-content-on-inverted text-body-lg max-w-2xl">
             A Contract Research Organization committed to reliable data,
             ICH/GCP compliance, and flexible service delivery — since 2009.
           </p>

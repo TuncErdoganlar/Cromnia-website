@@ -1,0 +1,17 @@
+{
+  "//": "ESLint configuration for CROMNIA. Extends Next.js's recommended rules plus the jsx-a11y plugin for accessibility checks. Run via: npm run lint",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "//": "Project-specific tweaks. jsx-a11y's recommended set is already strict; we relax a few rules that produce false positives in a Next.js + Tailwind codebase.",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/label-has-associated-control": [
+      "warn",
+      { "assert": "either" }
+    ],
+    "react/no-unescaped-entities": "off"
+  }
+}
