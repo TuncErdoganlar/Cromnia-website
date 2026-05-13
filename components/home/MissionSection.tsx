@@ -3,18 +3,20 @@
  *
  * Displays CROMNIA's Mission and Vision statements as two side-by-side cards.
  *
- * WHY ON THE HOME PAGE?
+ * REDESIGN (STEP 5):
  * -----------------------------------------------------------------------
- * Mission and Vision are key trust signals for a professional organization.
- * Placing a condensed version on the home page reinforces credibility
- * immediately, while the full About page provides deeper context.
+ * The page used to alternate light/dark sections. Now the whole home page
+ * stays in dark navy, with a subtle two-shade rhythm:
+ *   - Hero + Services      → #0A1628 (base navy)
+ *   - Who We Are + Why Us  → #0D1B2E (a touch lighter)
+ * Every section also gets a `border-t border-white/[0.05]` to define
+ * itself as a stack. The result is a quiet, modern breathing pattern
+ * down the page without breaking the dark theme.
  *
- * LAYOUT PATTERN:
- * -----------------------------------------------------------------------
- * Two equal-width cards in a responsive grid:
- * - Mobile: stacked vertically (grid-cols-1)
- * - Desktop: side by side (md:grid-cols-2)
- * Each card has a colored top border (brand accent) to visually differentiate them.
+ * The two cards inside switch to translucent-on-navy styling so they
+ * read consistently with Services and Why Choose.
+ *
+ * SERVER COMPONENT — no client state required.
  */
 
 import { Target, Eye } from "lucide-react";
@@ -27,50 +29,43 @@ import SectionHeading from "@/components/ui/SectionHeading";
  */
 export default function MissionSection() {
   return (
-    // py-20 → 80px top/bottom padding for comfortable breathing room
-    // bg-white → clean white background, contrasting with the dark hero above
-    <section className="py-20 bg-white">
+    // STEP 5 rhythm: slightly lighter navy panel + hairline top border.
+    <section className="py-20 bg-[#0D1B2E] border-t border-white/[0.05]">
       <div className="section-container">
 
-        {/* Section header — centered for symmetry with the two equal cards below */}
+        {/* Section header — light variant for the dark panel. */}
         <SectionHeading
           title="Who We Are"
           subtitle="Guiding principles behind every clinical research project we manage."
           centered
+          light
         />
 
         {/* ── TWO-COLUMN CARD GRID ────────────────────────────────────────────
             grid-cols-1 → single column on mobile
             md:grid-cols-2 → two columns on desktop (≥768px)
-            gap-8 → 32px space between cards
         ────────────────────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           {/* ── MISSION CARD ───────────────────────────────────────────────── */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow duration-300">
-            {/* Card header row: icon + title */}
+          <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-8 hover:border-blue-500/40 transition-colors duration-300">
             <div className="flex items-center gap-3 mb-6">
-              {/* Icon container — small colored square background */}
-              <div className="w-12 h-12 bg-navy-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                {/* Target icon represents precision and goal-orientation — ideal for "Mission" */}
-                <Target className="w-6 h-6 text-navy-500" />
+              <div className="w-12 h-12 bg-blue-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Target className="w-6 h-6 text-blue-400" />
               </div>
               <div>
-                {/* Small uppercase label above the heading — visual hierarchy */}
-                <p className="text-xs font-semibold text-sky-500 uppercase tracking-wider mb-0.5">
+                <p className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-0.5">
                   Our Mission
                 </p>
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="text-xl font-bold text-white">
                   What We Do
                 </h3>
               </div>
             </div>
 
-            {/* Decorative top accent bar */}
-            <div className="w-full h-0.5 bg-gradient-to-r from-sky-400 to-transparent rounded-full mb-6" />
+            <div className="w-full h-0.5 bg-gradient-to-r from-blue-400 to-transparent rounded-full mb-6" />
 
-            {/* Mission statement — direct quote from company documents */}
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-slate-400 leading-relaxed">
               To provide reliable data with the highest quality of our flexible and
               more cost-effective services on time, in accordance with requirements of
               Regulatory Authorities and with provisions of ICH/GCP.
@@ -78,15 +73,13 @@ export default function MissionSection() {
           </div>
 
           {/* ── VISION CARD ────────────────────────────────────────────────── */}
-          <div className="bg-navy-900 rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-            {/* Card header row */}
+          <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-8 hover:border-blue-500/40 transition-colors duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                {/* Eye icon represents looking forward — perfect for "Vision" */}
-                <Eye className="w-6 h-6 text-sky-400" />
+              <div className="w-12 h-12 bg-blue-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Eye className="w-6 h-6 text-blue-400" />
               </div>
               <div>
-                <p className="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-0.5">
+                <p className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-0.5">
                   Our Vision
                 </p>
                 <h3 className="text-xl font-bold text-white">
@@ -95,11 +88,9 @@ export default function MissionSection() {
               </div>
             </div>
 
-            {/* Decorative top accent bar */}
-            <div className="w-full h-0.5 bg-gradient-to-r from-sky-400 to-transparent rounded-full mb-6" />
+            <div className="w-full h-0.5 bg-gradient-to-r from-blue-400 to-transparent rounded-full mb-6" />
 
-            {/* Vision statement — direct quote from company documents */}
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-slate-400 leading-relaxed">
               To develop and provide a wide range of clinical research services —
               from study design through site monitoring and administration to data
               analysis and medical writing — in compliance with clinical research

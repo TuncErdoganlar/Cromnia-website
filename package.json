@@ -15,7 +15,8 @@
     "react-dom": "^18",
     "lucide-react": "^0.400.0",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.4.0"
+    "tailwind-merge": "^2.4.0",
+    "framer-motion": "^11.3.0"
   },
   "devDependencies": {
     "typescript": "^5",

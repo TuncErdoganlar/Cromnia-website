@@ -2,76 +2,75 @@
  * components/layout/Navbar.tsx
  *
  * The sticky top navigation bar for the entire CROMNIA website.
- * This is one of only two "client components" in the project (the other
- * is ContactForm.tsx), because it needs:
- * 1. useState — to track whether the mobile menu is open or closed
- * 2. usePathname — to highlight the currently active navigation link
  *
- * "use client" DIRECTIVE:
+ * RECENT REDESIGN (STEP 1):
  * -----------------------------------------------------------------------
- * By default, all components in Next.js 14 are Server Components — they
- * render on the server and send static HTML to the browser. Server Components
- * CANNOT use React hooks (useState, useEffect, etc.) or browser APIs.
+ * - Tracks scroll position with useEffect + window.scrollY; once the page
+ *   has been scrolled even a few pixels the navbar gets a glassmorphism
+ *   effect: a translucent background, backdrop-blur, and a 1px hairline
+ *   border at the bottom. At the top of the page it stays fully opaque
+ *   so it reads as a confident dark header.
+ * - A small blue dot sits immediately to the left of the "CROMNIA" wordmark
+ *   as a brand accent, replacing the older FlaskConical icon square.
+ * - The "Contact" link is removed from the nav list — its job is taken
+ *   over by a pill-shaped "Get in Touch" CTA pinned to the far right.
  *
- * Adding "use client" at the very top of a file marks it as a Client Component.
- * Client Components ARE rendered on the server initially (for SEO), but also
- * "hydrate" in the browser — meaning React takes over and makes them interactive.
- *
- * RULE: Only add "use client" when you genuinely need interactivity.
- * Keep as many components as Server Components as possible for performance.
+ * STILL A CLIENT COMPONENT — needs useState (mobile menu), usePathname
+ * (active link highlight), and useEffect (scroll listener).
  */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, FlaskConical } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 // ── NAVIGATION LINKS DATA ────────────────────────────────────────────────────
-// Defining the nav links as a constant array (outside the component) means
-// this object is created once and shared — it doesn't re-create on every render.
-// Each entry has `href` (the URL path) and `label` (the visible text).
+// Contact is intentionally NOT in this list anymore — it has been promoted to
+// a dedicated CTA button on the right side of the navbar.
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/services", label: "Services" },
   { href: "/career", label: "Career" },
-  { href: "/contact", label: "Contact" },
 ];
 
 /**
  * Navbar Component
  *
  * Renders a sticky navigation bar with:
- * - CROMNIA logo/wordmark on the left
- * - Desktop nav links on the right (hidden on mobile)
- * - Hamburger menu button on mobile (hidden on desktop)
- * - Mobile dropdown menu (shown/hidden via state)
- * - Active link highlighting based on current URL path
+ * - Blue-dot + CROMNIA wordmark on the left
+ * - Desktop nav links centered/right
+ * - "Get in Touch" pill CTA on the far right (desktop only)
+ * - Hamburger menu button on mobile, which reveals Contact too
  */
 export default function Navbar() {
   // ── STATE ──────────────────────────────────────────────────────────────────
-  // useState(false) creates a state variable `isMenuOpen` starting as false.
-  // `setIsMenuOpen` is the function that updates it.
-  // When `isMenuOpen` is true, the mobile menu is visible.
-  // When false, it's hidden.
-  //
-  // Every time you call setIsMenuOpen(), React re-renders this component
-  // with the new value — that's what makes the menu appear/disappear.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // `isScrolled` flips to true once the user has scrolled past a small
+  // threshold. Driving Tailwind classes from this single boolean keeps the
+  // styling simple and avoids re-renders mid-scroll for every pixel.
+  const [isScrolled, setIsScrolled] = useState(false);
+
   // ── PATHNAME ───────────────────────────────────────────────────────────────
-  // usePathname() returns the current URL path as a string.
-  // e.g., if you're on the About page: pathname === "/about"
-  // We use this to visually highlight the active nav link.
   const pathname = usePathname();
 
+  // ── SCROLL LISTENER ────────────────────────────────────────────────────────
+  // Attach a single passive scroll listener on mount; tear it down on unmount.
+  // We use 8px as the threshold so the glassmorphism kicks in immediately
+  // after any deliberate scroll, but doesn't twitch when the page bounces.
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 8);
+    };
+    // Run once on mount so a page-load mid-scroll (e.g. anchor link) is correct.
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // ── HELPER: isActive ───────────────────────────────────────────────────────
-  // A small helper function that returns true if a link's href matches the
-  // current page. Used to apply different styling to the active link.
-  //
-  // Special case for Home "/": we use exact match (pathname === href)
-  // to avoid "/" matching every route (since all routes start with /).
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
@@ -79,75 +78,60 @@ export default function Navbar() {
 
   return (
     // ── OUTER NAV ELEMENT ───────────────────────────────────────────────────
-    // sticky top-0 → the navbar stays at the top of the viewport as you scroll
-    // z-50         → high z-index ensures navbar stays above all other content
-    // bg-surface-inverted → dark brand surface (semantic token = navy-900)
-    // shadow-elev-3 → semantic elevation token (was shadow-lg)
-    // aria-label tells AT this is the "primary" site nav, distinct from
-    // the footer nav landmark below.
+    // The glassmorphism is driven by `isScrolled`:
+    //   - Top of page: fully opaque navy (looks like a normal dark header)
+    //   - Scrolled:    semi-transparent navy + backdrop-blur(12px) + hairline border
+    // We use Tailwind's arbitrary value syntax for the exact blur(12px).
     <nav
       aria-label="Primary"
-      className="sticky top-0 z-50 bg-surface-inverted shadow-elev-3"
+      className={`
+        sticky top-0 z-50 transition-all duration-300
+        ${
+          isScrolled
+            ? "bg-[#0A1628]/70 backdrop-blur-[12px] border-b border-white/[0.08] shadow-elev-2"
+            : "bg-surface-inverted border-b border-transparent shadow-elev-3"
+        }
+      `}
     >
       <div className="section-container">
-        {/* ── NAVBAR INNER ROW ──────────────────────────────────────────────
-            flex            → makes this a flexbox row
-            items-center    → vertically centers all children
-            justify-between → pushes logo to left, links to right
-            h-16            → fixed height of 64px for the navbar
-        ─────────────────────────────────────────────────────────────────── */}
+        {/* ── NAVBAR INNER ROW ────────────────────────────────────────────── */}
         <div className="flex items-center justify-between h-16">
 
           {/* ── LOGO / WORDMARK ─────────────────────────────────────────────
-              Clicking the logo always navigates back to the Home page.
-              We use the FlaskConical icon to represent clinical/laboratory work.
-              flex items-center gap-2 → icon and text sit side by side with 8px gap
+              The new mark is a tiny blue dot directly to the left of the
+              CROMNIA wordmark. Simple, brandable, and lives well on a glass
+              background where heavy logos would feel chunky.
           ─────────────────────────────────────────────────────────────────── */}
           <Link
             href="/"
             className="flex items-center gap-2 group"
             aria-label="CROMNIA Home"
           >
-            {/* Icon container with hover effect */}
-            <div className="w-9 h-9 bg-sky-400 rounded-lg flex items-center justify-center group-hover:bg-sky-300 transition-colors">
-              <FlaskConical className="w-5 h-5 text-navy-900" strokeWidth={2.5} />
-            </div>
-            {/* Company name — the text wordmark */}
+            {/* Blue brand dot — w-1.5 h-1.5 = 6px */}
+            <span
+              aria-hidden="true"
+              className="w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:bg-blue-400 transition-colors"
+            />
             <span className="text-xl font-bold text-white tracking-wide">
               CROMNIA
             </span>
           </Link>
 
-          {/* ── DESKTOP NAVIGATION ──────────────────────────────────────────
-              hidden md:flex → hidden on mobile (<768px), flex on desktop (≥768px)
-              items-center gap-1 → links sit in a row with 4px between them
-          ─────────────────────────────────────────────────────────────────── */}
+          {/* ── DESKTOP NAVIGATION ────────────────────────────────────────── */}
           <div className="hidden md:flex items-center gap-1">
-            {/*
-             * .map() iterates over the navLinks array and renders one <Link>
-             * per item. This is much cleaner than writing 5 separate <Link> tags.
-             *
-             * The `key` prop is required by React when rendering lists.
-             * React uses it internally to track which items changed when
-             * the component re-renders. Use a unique value — the href is perfect here.
-             */}
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  // aria-current="page" is the WCAG-recommended way to expose
-                  // the active nav link to screen readers (NVDA, JAWS, VoiceOver).
                   aria-current={active ? "page" : undefined}
                   className={`
                     px-4 py-2 rounded-control text-body-sm font-medium transition-all duration-200
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted
                     ${
                       active
-                        // Active link: bright accent + subtle highlight
                         ? "text-brand-accent bg-white/10"
-                        // Inactive: muted, brightens on hover
                         : "text-gray-300 hover:text-white hover:bg-white/5"
                     }
                   `}
@@ -156,16 +140,21 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            {/* ── GET IN TOUCH CTA (desktop) ─────────────────────────────────
+                Pill-shaped blue button replaces the old Contact nav link.
+                Visually distinct from the nav links — communicates "action".
+            ─────────────────────────────────────────────────────────────── */}
+            <Link
+              href="/contact"
+              className="ml-3 inline-flex items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-1.5 transition-colors
+                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted"
+            >
+              Get in Touch
+            </Link>
           </div>
 
-          {/* ── MOBILE MENU TOGGLE BUTTON ────────────────────────────────────
-              md:hidden → visible only on mobile (<768px), hidden on desktop
-              This button toggles the mobile dropdown menu open and closed.
-
-              aria-expanded → important for accessibility: tells screen readers
-              whether the menu is currently expanded or collapsed.
-              aria-label    → describes the button for screen readers.
-          ─────────────────────────────────────────────────────────────────── */}
+          {/* ── MOBILE MENU TOGGLE BUTTON ─────────────────────────────────── */}
           <button
             className="md:hidden p-2 rounded-control text-gray-300 hover:text-white hover:bg-white/10 transition-colors
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted"
@@ -174,11 +163,6 @@ export default function Navbar() {
             aria-controls="mobile-nav-menu"
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            {/*
-             * Conditional rendering: if menu is open, show X (close) icon.
-             * If menu is closed, show Menu (hamburger) icon.
-             * The `? :` is JavaScript's ternary operator — a compact if/else.
-             */}
             {isMenuOpen ? (
               <X className="w-6 h-6" />
             ) : (
@@ -189,13 +173,9 @@ export default function Navbar() {
       </div>
 
       {/* ── MOBILE DROPDOWN MENU ──────────────────────────────────────────────
-          This entire block only renders when `isMenuOpen` is true.
-          `{isMenuOpen && <div>...}` is React's pattern for conditional rendering.
-          When isMenuOpen is false, nothing is added to the DOM here.
-
-          md:hidden → this menu is completely hidden on desktop regardless of state
-          bg-navy-800 → slightly lighter background than the navbar itself
-          border-t border-white/10 → subtle dividing line between navbar and menu
+          On mobile we add Contact back as a regular link AND keep the pill
+          CTA as a full-width row so the page is still reachable when the
+          desktop button is hidden.
       ─────────────────────────────────────────────────────────────────── */}
       {isMenuOpen && (
         <div id="mobile-nav-menu" className="md:hidden bg-surface-inverted-soft border-t border-white/10">
@@ -207,7 +187,6 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  // When a mobile link is clicked, close the menu
                   onClick={() => setIsMenuOpen(false)}
                   className={`
                     px-4 py-3 rounded-control text-body-sm font-medium transition-colors
@@ -223,6 +202,15 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Mobile "Get in Touch" — same pill, but expanded for finger reach. */}
+            <Link
+              href="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="mt-2 inline-flex justify-center items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2.5 transition-colors"
+            >
+              Get in Touch
+            </Link>
           </div>
         </div>
       )}

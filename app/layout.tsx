@@ -92,6 +92,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        {/* Tabler Icons web font — used across the redesigned UI (Hero/Services/WhyChooseUs).
+            Loaded via CDN so we can use `<i className="ti ti-..." />` anywhere on the site. */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css"
+        />
+      </head>
       <body className="antialiased min-h-screen flex flex-col bg-surface-subtle">
 
         {/* ── SKIP LINK ────────────────────────────────────────────────────
