@@ -22,17 +22,29 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import {
+  Menu,
+  X,
+  Home,
+  Users,
+  LayoutGrid,
+  Briefcase,
+  Mail,
+  type LucideIcon,
+} from "lucide-react";
 
 // ── NAVIGATION LINKS DATA ────────────────────────────────────────────────────
 // Contact is intentionally NOT in this list anymore — it has been promoted to
 // a dedicated CTA button on the right side of the navbar.
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/services", label: "Services" },
-  { href: "/career", label: "Career" },
+// Each link also carries a lucide-react icon component (SVG, scales crisply at
+// any size, inherits the link's text color via `currentColor`).
+const navLinks: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: "/", label: "Home", icon: Home },
+  { href: "/about", label: "About Us", icon: Users },
+  { href: "/services", label: "Services", icon: LayoutGrid },
+  { href: "/career", label: "Career", icon: Briefcase },
 ];
 
 /**
@@ -98,36 +110,39 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* ── LOGO / WORDMARK ─────────────────────────────────────────────
-              The new mark is a tiny blue dot directly to the left of the
-              CROMNIA wordmark. Simple, brandable, and lives well on a glass
-              background where heavy logos would feel chunky.
+              The official CROMNIA "cromnia · CLINICAL RESEARCH" lockup,
+              extracted from the company brochure and recolored white so it
+              reads cleanly on the dark navy / glass navbar. The intrinsic
+              839×401 ratio is preserved; h-8 + w-auto sizes it for the bar.
+              `priority` loads it eagerly since it's above the fold on every page.
           ─────────────────────────────────────────────────────────────────── */}
           <Link
             href="/"
-            className="flex items-center gap-2 group"
-            aria-label="CROMNIA Home"
+            className="flex items-center group"
+            aria-label="CROMNIA — Clinical Research, Home"
           >
-            {/* Blue brand dot — w-1.5 h-1.5 = 6px */}
-            <span
-              aria-hidden="true"
-              className="w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:bg-blue-400 transition-colors"
+            <Image
+              src="/cromnia-logo-white.png"
+              alt="CROMNIA Clinical Research"
+              width={839}
+              height={401}
+              priority
+              className="h-8 w-auto transition-opacity duration-200 group-hover:opacity-90"
             />
-            <span className="text-xl font-bold text-white tracking-wide">
-              CROMNIA
-            </span>
           </Link>
 
           {/* ── DESKTOP NAVIGATION ────────────────────────────────────────── */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const active = isActive(link.href);
+              const Icon = link.icon;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   className={`
-                    px-4 py-2 rounded-control text-body-sm font-medium transition-all duration-200
+                    inline-flex items-center gap-2 px-4 py-2 rounded-control text-body-sm font-medium transition-all duration-200
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted
                     ${
                       active
@@ -136,6 +151,8 @@ export default function Navbar() {
                     }
                   `}
                 >
+                  {/* Icon is decorative — the visible label already names the link. */}
+                  <Icon className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
                   {link.label}
                 </Link>
               );
@@ -147,9 +164,10 @@ export default function Navbar() {
             ─────────────────────────────────────────────────────────────── */}
             <Link
               href="/contact"
-              className="ml-3 inline-flex items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-1.5 transition-colors
+              className="ml-3 inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-1.5 transition-colors
                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted"
             >
+              <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
               Get in Touch
             </Link>
           </div>
@@ -182,6 +200,7 @@ export default function Navbar() {
           <div className="section-container py-3 flex flex-col gap-1">
             {navLinks.map((link) => {
               const active = isActive(link.href);
+              const Icon = link.icon;
               return (
                 <Link
                   key={link.href}
@@ -189,7 +208,7 @@ export default function Navbar() {
                   aria-current={active ? "page" : undefined}
                   onClick={() => setIsMenuOpen(false)}
                   className={`
-                    px-4 py-3 rounded-control text-body-sm font-medium transition-colors
+                    inline-flex items-center gap-3 px-4 py-3 rounded-control text-body-sm font-medium transition-colors
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted-soft
                     ${
                       active
@@ -198,6 +217,7 @@ export default function Navbar() {
                     }
                   `}
                 >
+                  <Icon className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
                   {link.label}
                 </Link>
               );
@@ -207,8 +227,9 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setIsMenuOpen(false)}
-              className="mt-2 inline-flex justify-center items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2.5 transition-colors"
+              className="mt-2 inline-flex justify-center items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2.5 transition-colors"
             >
+              <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
               Get in Touch
             </Link>
           </div>

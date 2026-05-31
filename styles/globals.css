@@ -90,6 +90,54 @@
            text-white shadow-elev-3
            focus:not-sr-only focus:outline-none;
   }
+
+  /*
+   * .text-gradient-brand — the animated gradient wordmark used for "CROMNIA"
+   * in the hero. The gradient is painted onto the text itself via
+   * background-clip:text, then its background-position is animated so the
+   * highlight sweeps slowly left↔right. Deliberately slow (8s) and within the
+   * navy→sky brand range so it reads premium, not flashy.
+   *
+   * The global prefers-reduced-motion rule below freezes the sweep to a single
+   * static gradient frame for motion-sensitive users — no extra work needed.
+   */
+  .text-gradient-brand {
+    background-image: linear-gradient(
+      100deg,
+      #e0f2fe 0%,
+      #38bdf8 25%,
+      #60a5fa 50%,
+      #38bdf8 75%,
+      #e0f2fe 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradient-sweep 8s linear infinite;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * KEYFRAMES (hero gradient sweep + scroll-cue bounce)
+ * Both are paused by the prefers-reduced-motion rule further down.
+ * ─────────────────────────────────────────────────────────────────────── */
+@keyframes gradient-sweep {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes scroll-cue {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
 }
 
 /* ───────────────────────────────────────────────────────────────────────────

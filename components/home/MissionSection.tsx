@@ -30,7 +30,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 export default function MissionSection() {
   return (
     // STEP 5 rhythm: slightly lighter navy panel + hairline top border.
-    <section className="py-20 bg-[#0D1B2E] border-t border-white/[0.05]">
+    <section id="explore" className="scroll-mt-16 py-20 bg-[#0D1B2E] border-t border-white/[0.05]">
       <div className="section-container">
 
         {/* Section header — light variant for the dark panel. */}

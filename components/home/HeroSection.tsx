@@ -1,34 +1,32 @@
 /**
  * components/home/HeroSection.tsx
  *
- * The full-viewport hero section — the very first thing visitors see.
+ * The full-viewport hero — the first thing visitors see.
  *
- * REDESIGN (STEP 2):
+ * REDESIGN (STEP 6 — "visual impact" pass):
  * -----------------------------------------------------------------------
- * - Subtle CSS grid texture overlay on the navy background (two thin
- *   linear-gradient lines repeating every 24px) for an engineered,
- *   "command-center" feel without distracting from the copy.
- * - A large soft blue orb (radial-gradient) sits in the top-right area,
- *   blurred with blur-3xl. Adds depth without using imagery.
- * - The layout is now left-aligned and capped at max-w-2xl so the eye
- *   tracks naturally from headline → paragraph → CTAs.
- * - A small animated pill badge ("Est. 2009 · ICH/GCP Compliant") sits
- *   above the headline as an authority signal.
- * - Hero elements animate in on mount via framer-motion: badge → heading
- *   → paragraph → buttons, each staggered by 0.15s, sliding up 20px from
- *   below as they fade in.
+ * - A <ParticleField> canvas drifts a faint node-network behind the copy
+ *   (clinical-data / molecular motif), layered over the existing navy grid
+ *   texture + soft blue orb. All three are decorative and aria-hidden.
+ * - "CROMNIA" is now an animated gradient wordmark (.text-gradient-brand)
+ *   whose highlight sweeps slowly across the brand navy→sky range.
+ * - A scroll-cue at the bottom (animated chevron in a mouse outline) invites
+ *   the user into the content and links to the first section (#explore).
+ * - The mount cascade (badge → heading → tagline → paragraph → CTAs) is kept,
+ *   driven by framer-motion's staggered `fadeUp` variants.
  *
- * This is now a CLIENT COMPONENT because framer-motion runs in the browser.
+ * CLIENT COMPONENT — framer-motion + the canvas child run in the browser.
  */
 "use client";
 
 import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import Button from "@/components/ui/Button";
+import ParticleField from "@/components/home/ParticleField";
 
 // ── ANIMATION VARIANTS ───────────────────────────────────────────────────────
-// A single reusable variants object keeps the four animations consistent.
-// Each child sets its own `custom` index (0,1,2,3) — that index multiplied
-// by 0.15s becomes its delay, giving a clean staggered cascade.
+// One reusable variants object. Each child passes a `custom` index whose value
+// × 0.15s becomes its delay, producing a clean staggered cascade on mount.
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   show: (i: number) => ({
@@ -42,17 +40,11 @@ const fadeUp = {
   }),
 };
 
-/**
- * HeroSection Component
- *
- * Renders the full-screen introductory section of the home page.
- */
 export default function HeroSection() {
   return (
     // ── HERO WRAPPER ─────────────────────────────────────────────────────────
-    // The background grid texture is applied via an inline `style` so we can
-    // express the precise rgba color and 24px tile size required by the spec.
-    // The bg color stays the brand navy (#0A1628) to match the design system.
+    // Background grid texture is inline so we can express the exact rgba + 24px
+    // tile. The base color is the brand navy (#0A1628) to match the system.
     <section
       className="relative min-h-screen bg-[#0A1628] flex items-center overflow-hidden"
       style={{
@@ -61,15 +53,15 @@ export default function HeroSection() {
         backgroundSize: "24px 24px",
       }}
     >
+      {/* ── PARTICLE NODE-NETWORK ────────────────────────────────────────────
+          Sits directly on the navy, beneath the orb and copy (z-0). */}
+      <ParticleField />
 
-      {/* ── DECORATIVE BLUE ORB ─────────────────────────────────────────────
-          A radial-gradient circle in the top-right corner, blurred heavily,
-          gives the hero a soft "spotlight" of brand color without imagery.
-          pointer-events-none + aria-hidden keep it purely decorative.
-      ──────────────────────────────────────────────────────────────────────── */}
+      {/* ── DECORATIVE BLUE ORB ──────────────────────────────────────────────
+          Soft radial spotlight of brand color, top-right, heavily blurred. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 right-0 w-96 h-96 blur-3xl"
+        className="pointer-events-none absolute top-0 right-0 w-96 h-96 blur-3xl z-0"
         style={{
           background:
             "radial-gradient(circle, rgba(37,99,235,0.20) 0%, transparent 70%)",
@@ -77,16 +69,12 @@ export default function HeroSection() {
       />
 
       {/* ── HERO CONTENT ─────────────────────────────────────────────────────
-          Left-aligned, capped at max-w-2xl so the line lengths stay
-          readable. Sits above the orb via z-10.
-      ──────────────────────────────────────────────────────────────────────── */}
+          Left-aligned, capped at max-w-2xl for readable line lengths. z-10
+          lifts it above the orb + particles. */}
       <div className="relative z-10 section-container py-24">
         <div className="max-w-2xl text-left">
 
-          {/* ── ANIMATED PILL BADGE ──────────────────────────────────────────
-              Authority badge: founding year + compliance certification.
-              Fades in first (i=0).
-          ──────────────────────────────────────────────────────────────────── */}
+          {/* ── ANIMATED PILL BADGE (i=0) ────────────────────────────────── */}
           <motion.div
             custom={0}
             initial="hidden"
@@ -97,21 +85,20 @@ export default function HeroSection() {
             Est. 2009 · ICH/GCP Compliant
           </motion.div>
 
-          {/* ── MAIN HEADLINE ───────────────────────────────────────────────
-              text-display ships a clamp() so the size is fluid across
-              breakpoints with no jumpy steps. (i=1)
-          ──────────────────────────────────────────────────────────────────── */}
+          {/* ── MAIN HEADLINE (i=1) ──────────────────────────────────────────
+              text-display ships its own fluid clamp(). The gradient wordmark
+              gets `pb-2` so descenders/over-tight clipping never crop the glyphs. */}
           <motion.h1
             custom={1}
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="text-display text-white mb-4"
+            className="text-display mb-4"
           >
-            CROMNIA
+            <span className="text-gradient-brand pb-2 inline-block">CROMNIA</span>
           </motion.h1>
 
-          {/* ── SUB-HEADLINE (tagline) ─────────────────────────────────────── */}
+          {/* ── SUB-HEADLINE / TAGLINE (i=1) ─────────────────────────────── */}
           <motion.p
             custom={1}
             initial="hidden"
@@ -122,9 +109,7 @@ export default function HeroSection() {
             Reliable Data&nbsp;&nbsp;•&nbsp;&nbsp;Flexible Services&nbsp;&nbsp;•&nbsp;&nbsp;Regulatory Excellence
           </motion.p>
 
-          {/* ── DESCRIPTION PARAGRAPH ────────────────────────────────────────
-              The factual mission summary. (i=2)
-          ──────────────────────────────────────────────────────────────────── */}
+          {/* ── DESCRIPTION (i=2) ────────────────────────────────────────── */}
           <motion.p
             custom={2}
             initial="hidden"
@@ -137,9 +122,7 @@ export default function HeroSection() {
             and the requirements of regulatory authorities.
           </motion.p>
 
-          {/* ── CTA BUTTONS ──────────────────────────────────────────────────
-              Two CTAs side-by-side (stacked on small screens). (i=3)
-          ──────────────────────────────────────────────────────────────────── */}
+          {/* ── CTA BUTTONS (i=3) ────────────────────────────────────────── */}
           <motion.div
             custom={3}
             initial="hidden"
@@ -161,6 +144,25 @@ export default function HeroSection() {
 
         </div>
       </div>
+
+      {/* ── SCROLL CUE ───────────────────────────────────────────────────────
+          Centered at the bottom: a mouse outline with a chevron that bounces
+          (scroll-cue keyframe, frozen under reduced-motion). It's a real anchor
+          to the first content section so keyboard users can activate it too.
+          Fades in last so it doesn't compete with the headline cascade. */}
+      <motion.a
+        href="#explore"
+        aria-label="Scroll to content"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-blue-300/70 hover:text-blue-300 transition-colors
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1628] rounded-full p-1"
+      >
+        <span className="flex h-9 w-5 items-start justify-center rounded-full border border-current pt-1.5">
+          <ChevronDown className="h-3 w-3 animate-[scroll-cue_1.8s_ease-in-out_infinite]" />
+        </span>
+      </motion.a>
 
     </section>
   );

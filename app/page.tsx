@@ -34,7 +34,7 @@
 import type { Metadata } from "next";
 import HeroSection from "@/components/home/HeroSection";
 import MissionSection from "@/components/home/MissionSection";
-import ServicesPreview from "@/components/home/ServicesPreview";
+import ServicesScroller from "@/components/home/ServicesScroller";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 
 // SEO metadata for the home page
@@ -65,7 +65,7 @@ export default function HomePage() {
        */}
       <HeroSection />
       <MissionSection />
-      <ServicesPreview />
+      <ServicesScroller />
       <WhyChooseUs />
     </>
   );

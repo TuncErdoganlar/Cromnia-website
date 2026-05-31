@@ -20,7 +20,8 @@
  */
 
 import Link from "next/link";
-import { MapPin, Phone, Printer, FlaskConical, Mail } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Phone, Printer, Mail } from "lucide-react";
 
 /**
  * Footer Component
@@ -54,13 +55,16 @@ export default function Footer() {
               Brand identity with logo, company name, and short description.
           ─────────────────────────────────────────────────────────────────── */}
           <div className="flex flex-col gap-4">
-            {/* Logo row */}
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-sky-400 rounded-lg flex items-center justify-center">
-                <FlaskConical className="w-5 h-5 text-navy-900" strokeWidth={2.5} />
-              </div>
-              <span className="text-xl font-bold text-white">CROMNIA</span>
-            </div>
+            {/* Logo row — official white CROMNIA lockup (footer is dark navy). */}
+            <Link href="/" aria-label="CROMNIA — Clinical Research, Home" className="inline-flex">
+              <Image
+                src="/cromnia-logo-white.png"
+                alt="CROMNIA Clinical Research"
+                width={839}
+                height={401}
+                className="h-10 w-auto"
+              />
+            </Link>
 
             {/* Short description */}
             <p className="text-sm leading-relaxed text-gray-400">
