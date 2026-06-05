@@ -34,8 +34,10 @@
 import type { Metadata } from "next";
 import HeroSection from "@/components/home/HeroSection";
 import MissionSection from "@/components/home/MissionSection";
+import StatsCounter from "@/components/home/StatsCounter";
 import ServicesScroller from "@/components/home/ServicesScroller";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import CTABanner from "@/components/home/CTABanner";
 
 // SEO metadata for the home page
 // The root layout's title template won't apply here because we set `title` directly.
@@ -65,8 +67,10 @@ export default function HomePage() {
        */}
       <HeroSection />
       <MissionSection />
+      <StatsCounter />
       <ServicesScroller />
       <WhyChooseUs />
+      <CTABanner />
     </>
   );
 }

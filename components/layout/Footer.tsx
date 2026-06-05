@@ -21,7 +21,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Printer, Mail } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 /**
  * Footer Component
@@ -130,8 +130,8 @@ export default function Footer() {
                 {/* flex-shrink-0 prevents the icon from squishing when the text wraps */}
                 <MapPin className="w-4 h-4 text-sky-400 mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-gray-400 leading-relaxed">
-                  1374 sok. no:10 / 601<br />
-                  Alsancak - Izmir / TURKEY
+                  2013 sok. no:12<br />
+                  Bostanlı - Izmir / TURKEY
                 </span>
               </li>
 
@@ -144,14 +144,6 @@ export default function Footer() {
                 >
                   +90 232 4890068
                 </a>
-              </li>
-
-              {/* Fax — Printer icon represents fax in the absence of a dedicated fax icon */}
-              <li className="flex items-center gap-3">
-                <Printer className="w-4 h-4 text-sky-400 flex-shrink-0" />
-                <span className="text-sm text-gray-400">
-                  +90 232 4890069
-                </span>
               </li>
 
               {/* Email placeholder */}

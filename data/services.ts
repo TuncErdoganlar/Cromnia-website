@@ -31,6 +31,9 @@ export interface ServiceItem {
   details: string[]; // Full bullet-point list of specific activities for the Services page
   icon: string;      // The name of the Lucide React icon to display (e.g., "MapPin")
                      // This is a string here, then mapped to an actual component in ServiceCard.tsx
+  fill: number;      // Liquid level of this service's test tube on the home page (0–1).
+                     // 0 = empty tube, 1 = completely full. Tweak per service to taste —
+                     // the ServicesScroller "tube rack" reads this value directly.
 }
 
 // The complete services array — all 7 CROMNIA services extracted from company documents.
@@ -49,6 +52,7 @@ export const services: ServiceItem[] = [
       "Evaluation against additional sponsor-specific requirements",
     ],
     icon: "MapPin",
+    fill: 0.6,
   },
   {
     id: 2,
@@ -66,6 +70,7 @@ export const services: ServiceItem[] = [
       "Project management and vendor coordination",
     ],
     icon: "ClipboardList",
+    fill: 0.78,
   },
   {
     id: 3,
@@ -82,6 +87,7 @@ export const services: ServiceItem[] = [
       "Investigational product destruction permission management",
     ],
     icon: "FileCheck",
+    fill: 0.5,
   },
   {
     id: 4,
@@ -97,6 +103,7 @@ export const services: ServiceItem[] = [
       "Documentation and abstracts for congress exhibits and publications",
     ],
     icon: "PenLine",
+    fill: 0.66,
   },
   {
     id: 5,
@@ -114,6 +121,7 @@ export const services: ServiceItem[] = [
       "Preparation for monitoring visits and regulatory audits",
     ],
     icon: "Users",
+    fill: 0.55,
   },
   {
     id: 6,
@@ -131,6 +139,7 @@ export const services: ServiceItem[] = [
       "Scientific articles and technical documents",
     ],
     icon: "Languages",
+    fill: 0.72,
   },
   {
     id: 7,
@@ -147,5 +156,6 @@ export const services: ServiceItem[] = [
       "Administrative support throughout the event lifecycle",
     ],
     icon: "CalendarDays",
+    fill: 0.45,
   },
 ];

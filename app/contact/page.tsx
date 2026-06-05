@@ -4,7 +4,7 @@
  * The CONTACT PAGE — rendered at /contact
  *
  * Layout: Two-column side-by-side:
- * - Left column: ContactInfo (address, phone, fax, map placeholder)
+ * - Left column: ContactInfo (address, phone, business hours, embedded map)
  * - Right column: ContactForm (the interactive form)
  *
  * Note: This page itself is a Server Component.
@@ -20,7 +20,7 @@ import ContactForm from "@/components/contact/ContactForm";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact CROMNIA's clinical research team. Address: Alsancak, Izmir, Turkey. " +
+    "Contact CROMNIA's clinical research team. Address: Bostanlı, Izmir, Turkey. " +
     "Phone: +90 232 4890068.",
 };
 
