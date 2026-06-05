@@ -113,7 +113,7 @@ export default function Navbar() {
               The official CROMNIA "cromnia · CLINICAL RESEARCH" lockup,
               extracted from the company brochure and recolored white so it
               reads cleanly on the dark navy / glass navbar. The intrinsic
-              839×401 ratio is preserved; h-8 + w-auto sizes it for the bar.
+              839×401 ratio is preserved; h-10 + w-auto sizes it for the bar.
               `priority` loads it eagerly since it's above the fold on every page.
           ─────────────────────────────────────────────────────────────────── */}
           <Link
@@ -127,7 +127,7 @@ export default function Navbar() {
               width={839}
               height={401}
               priority
-              className="h-8 w-auto transition-opacity duration-200 group-hover:opacity-90"
+              className="h-10 w-auto transition-opacity duration-200 group-hover:opacity-90"
             />
           </Link>
 
@@ -142,7 +142,7 @@ export default function Navbar() {
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   className={`
-                    inline-flex items-center gap-2 px-4 py-2 rounded-control text-body-sm font-medium transition-all duration-200
+                    inline-flex items-center gap-2 px-4 py-2 rounded-control text-base font-medium transition-all duration-200
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted
                     ${
                       active
@@ -152,7 +152,7 @@ export default function Navbar() {
                   `}
                 >
                   {/* Icon is decorative — the visible label already names the link. */}
-                  <Icon className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
+                  <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
                   {link.label}
                 </Link>
               );
@@ -164,10 +164,10 @@ export default function Navbar() {
             ─────────────────────────────────────────────────────────────── */}
             <Link
               href="/contact"
-              className="ml-3 inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-1.5 transition-colors
+              className="ml-3 inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-base font-medium px-4 py-1.5 transition-colors
                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted"
             >
-              <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
+              <Mail className="w-5 h-5 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
               Get in Touch
             </Link>
           </div>
@@ -208,7 +208,7 @@ export default function Navbar() {
                   aria-current={active ? "page" : undefined}
                   onClick={() => setIsMenuOpen(false)}
                   className={`
-                    inline-flex items-center gap-3 px-4 py-3 rounded-control text-body-sm font-medium transition-colors
+                    inline-flex items-center gap-3 px-4 py-3 rounded-control text-base font-medium transition-colors
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-inverted-soft
                     ${
                       active
@@ -217,7 +217,7 @@ export default function Navbar() {
                     }
                   `}
                 >
-                  <Icon className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
+                  <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
                   {link.label}
                 </Link>
               );
@@ -227,9 +227,9 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setIsMenuOpen(false)}
-              className="mt-2 inline-flex justify-center items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2.5 transition-colors"
+              className="mt-2 inline-flex justify-center items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-base font-medium px-4 py-2.5 transition-colors"
             >
-              <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
+              <Mail className="w-5 h-5 flex-shrink-0" aria-hidden="true" strokeWidth={2} />
               Get in Touch
             </Link>
           </div>
