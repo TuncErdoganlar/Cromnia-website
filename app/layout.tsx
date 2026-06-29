@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   description:
     "CROMNIA is a Contract Research Organization (CRO) based in Izmir, Turkey. " +
-    "We provide reliable, flexible, and cost-effective clinical research services " +
+    "We provide reliable, flexible, and cost effective clinical research services " +
     "for Phase II–IV trials across all therapeutic areas, in compliance with ICH/GCP standards.",
   keywords: [
     "CRO",

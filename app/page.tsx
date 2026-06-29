@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   title: "CROMNIA | Contract Research Organization",
   description:
     "CROMNIA is a CRO based in Izmir, Turkey, offering clinical trial management, " +
-    "regulatory affairs, medical writing, and more — since 2009.",
+    "regulatory affairs, medical writing, and more since 2009.",
 };
 
 /**

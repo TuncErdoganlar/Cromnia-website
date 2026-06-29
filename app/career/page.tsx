@@ -13,7 +13,7 @@ import CareerSection from "@/components/career/CareerSection";
 export const metadata: Metadata = {
   title: "Career",
   description:
-    "Join the CROMNIA team. We are seeking experienced clinical research professionals — " +
+    "Join the CROMNIA team. We are seeking experienced clinical research professionals: " +
     "CRAs, regulatory specialists, medical writers, and site coordinators.",
 };
 
@@ -33,7 +33,7 @@ export default function CareerPage() {
             Career
           </h1>
           <p className="text-content-on-inverted text-body-lg max-w-2xl">
-            Become part of a well-established professional team at the forefront
+            Become part of a well established professional team at the forefront
             of clinical research in Turkey.
           </p>
         </div>

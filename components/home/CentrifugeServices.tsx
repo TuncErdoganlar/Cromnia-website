@@ -85,7 +85,7 @@ const SERVICES: Service[] = [
     title: "Clinical Trial Management",
     tag: "Trials",
     blurb:
-      "End-to-end management of Phase II–IV clinical and observational studies across every therapeutic area.",
+      "End to end management of Phase II–IV clinical and observational studies across every therapeutic area.",
     points: ["SQV · SIV · SMV · SCOV site visits", "TMF setup & maintenance", "Vendor & IP logistics"],
     color: "#38BDF8",
     Icon: ClipboardList,
@@ -121,8 +121,8 @@ const SERVICES: Service[] = [
     title: "Site Selection & Feasibility",
     tag: "Feasibility",
     blurb:
-      "Data-driven evaluation of investigator sites to find the fastest path to recruitment.",
-    points: ["Eligible-patient mapping", "GCP-training review", "Infrastructure assessment"],
+      "Data driven evaluation of investigator sites to find the fastest path to recruitment.",
+    points: ["Eligible patient mapping", "GCP training review", "Infrastructure assessment"],
     color: "#FB7185",
     Icon: MapPin,
   },
@@ -130,8 +130,8 @@ const SERVICES: Service[] = [
     title: "Medical Translation",
     tag: "Translation",
     blurb:
-      "Physician-led translation of regulated documents with clinical precision and on-time delivery.",
-    points: ["SmPC · PIL · labelling", "ICF back-translation", "Protocol & IB translation"],
+      "Physician led translation of regulated documents with clinical precision and on time delivery.",
+    points: ["SmPC · PIL · labelling", "ICF back translation", "Protocol & IB translation"],
     color: "#2DD4BF",
     Icon: Languages,
   },
@@ -241,7 +241,7 @@ export default function CentrifugeServices() {
           <h2 className="text-h2 text-white mt-1">Our Services</h2>
           <div aria-hidden="true" className="mt-3 h-1 w-16 rounded-pill bg-brand-accent mx-auto" />
           <p className="mt-4 text-body-lg text-content-on-inverted max-w-2xl mx-auto">
-            Load the rotor and run the centrifuge — each sample is a service. It spins up,
+            Load the rotor and run the centrifuge: each sample is a service. It spins up,
             then settles on a service and reports out on the control panel.
           </p>
         </div>

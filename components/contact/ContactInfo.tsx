@@ -46,7 +46,7 @@ export default function ContactInfo() {
             </p>
             <p className="text-gray-700 font-medium leading-relaxed">
               2013 sok. no:12<br />
-              Bostanlı — Izmir / TURKEY
+              Bostanlı, Izmir / TURKEY
             </p>
           </div>
         </li>
@@ -98,7 +98,7 @@ export default function ContactInfo() {
         </p>
         <div className="w-full rounded-2xl border border-navy-700 overflow-hidden shadow-sm">
           <iframe
-            title="CROMNIA office location — 2013 sok. no:12, Bostanlı, Izmir"
+            title="CROMNIA office location: 2013 sok. no:12, Bostanlı, Izmir"
             src="https://www.google.com/maps?q=2013%20Sokak%20No%3A12%20Bostanl%C4%B1%20Kar%C5%9F%C4%B1yaka%20%C4%B0zmir&z=15&output=embed"
             className="w-full h-64 border-0"
             loading="lazy"

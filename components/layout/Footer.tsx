@@ -56,7 +56,7 @@ export default function Footer() {
           ─────────────────────────────────────────────────────────────────── */}
           <div className="flex flex-col gap-4">
             {/* Logo row — official white CROMNIA lockup (footer is dark navy). */}
-            <Link href="/" aria-label="CROMNIA — Clinical Research, Home" className="inline-flex">
+            <Link href="/" aria-label="CROMNIA Clinical Research, Home" className="inline-flex">
               <Image
                 src="/cromnia-logo-white.png"
                 alt="CROMNIA Clinical Research"
@@ -69,13 +69,13 @@ export default function Footer() {
             {/* Short description */}
             <p className="text-sm leading-relaxed text-gray-400">
               A Contract Research Organization providing reliable, flexible, and
-              cost-effective clinical research services across all therapeutic areas.
+              cost effective clinical research services across all therapeutic areas.
             </p>
 
             {/* Founded badge */}
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <MapPin className="w-4 h-4 text-sky-400 flex-shrink-0" />
-              <span>Izmir, Turkey — Est. 2009</span>
+              <span>Izmir, Turkey · Est. 2009</span>
             </div>
           </div>
 
@@ -131,7 +131,7 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 text-sky-400 mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-gray-400 leading-relaxed">
                   2013 sok. no:12<br />
-                  Bostanlı - Izmir / TURKEY
+                  Bostanlı, Izmir / TURKEY
                 </span>
               </li>
 
@@ -172,7 +172,7 @@ export default function Footer() {
             © {currentYear} CROMNIA. All rights reserved.
           </p>
           <p>
-            Contract Research Organization — Izmir, Turkey
+            Contract Research Organization · Izmir, Turkey
           </p>
         </div>
       </div>

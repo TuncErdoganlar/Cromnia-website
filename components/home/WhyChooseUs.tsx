@@ -34,7 +34,7 @@ const differentiators = [
     icon: "ti ti-shield-check",
     title: "ICH/GCP Compliant",
     description:
-      "Every project we manage adheres to International Council for Harmonisation (ICH) and Good Clinical Practice (GCP) standards — the global benchmark for clinical trial quality.",
+      "Every project we manage adheres to International Council for Harmonisation (ICH) and Good Clinical Practice (GCP) standards, the global benchmark for clinical trial quality.",
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const differentiators = [
   {
     id: 3,
     icon: "ti ti-coin",
-    title: "Cost-Effective Solutions",
+    title: "Cost Effective Solutions",
     description:
       "Flexible service models designed to maximize sponsor budget efficiency without compromising data quality, regulatory compliance, or timelines.",
   },

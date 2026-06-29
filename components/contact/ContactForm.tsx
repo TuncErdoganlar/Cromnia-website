@@ -314,7 +314,7 @@ export default function ContactForm() {
           >
             Supporting Document
             <span className="text-gray-400 text-xs font-normal ml-2">
-              (optional — plain text, Word, or PDF)
+              (optional: plain text, Word, or PDF)
             </span>
           </label>
           <input

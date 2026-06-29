@@ -23,7 +23,7 @@ interface Stat {
 const STATS: Stat[] = [
   { value: 15, suffix: "+", label: "Years Experience", description: "Operating in the Turkish CRO market since 2009." },
   { value: 100, suffix: "%", label: "ICH/GCP Compliance", description: "Every trial follows international quality standards." },
-  { value: 0, staticText: "II–IV", prefix: "Phase ", label: "Trial Coverage", description: "From early efficacy through post-marketing." },
+  { value: 0, staticText: "II–IV", prefix: "Phase ", label: "Trial Coverage", description: "From early efficacy through post marketing." },
   { value: 7, suffix: "+", label: "Core Services", description: "Project management to medical writing under one roof." },
 ];
 
