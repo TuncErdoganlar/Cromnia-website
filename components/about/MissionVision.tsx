@@ -64,7 +64,7 @@ export default function MissionVision() {
             {/* Full mission statement — direct quote from company documents */}
             <p className="text-gray-200 leading-relaxed text-lg relative z-10">
               To provide reliable data with the highest quality of our flexible and
-              more cost-effective services on time, in accordance with requirements
+              more cost effective services on time, in accordance with requirements
               of Regulatory Authorities and with provisions of ICH/GCP.
             </p>
 
@@ -92,9 +92,9 @@ export default function MissionVision() {
 
             {/* Full vision statement — direct quote from company documents */}
             <p className="text-gray-200 leading-relaxed text-lg relative z-10">
-              To develop and provide a wide range of clinical research services —
+              To develop and provide a wide range of clinical research services,
               from study design through site monitoring and administration to data
-              analysis and medical writing — in compliance with clinical research
+              analysis and medical writing, in compliance with clinical research
               requirements and working to the highest international professional
               and ethical standards.
             </p>

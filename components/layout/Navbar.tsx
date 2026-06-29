@@ -119,7 +119,7 @@ export default function Navbar() {
           <Link
             href="/"
             className="flex items-center group"
-            aria-label="CROMNIA — Clinical Research, Home"
+            aria-label="CROMNIA Clinical Research, Home"
           >
             <Image
               src="/cromnia-logo-white.png"

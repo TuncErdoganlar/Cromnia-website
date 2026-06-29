@@ -31,8 +31,8 @@ const companyFacts = [
 // Key strengths displayed as a checklist
 const strengths = [
   "Qualified and specialized clinical research teams",
-  "Cost-effective, flexible, and timely service delivery",
-  "Well-established nationwide investigator network",
+  "Cost effective, flexible, and timely service delivery",
+  "Well established nationwide investigator network",
   "Comprehensive feasibility analysis across all medical areas",
   "Absolute security and confidentiality of medical records",
   "Phase I support through Medical Faculty collaborations",
@@ -74,8 +74,8 @@ export default function CompanyOverview() {
             <p className="text-gray-600 leading-relaxed">
               Our clinical team includes qualified medical doctors, and we maintain a
               wide investigator database throughout Turkey. This network allows us to
-              identify the right sites quickly and efficiently — reducing timelines and
-              improving patient recruitment outcomes.
+              identify the right sites quickly and efficiently, which shortens timelines
+              and improves patient recruitment outcomes.
             </p>
 
             <p className="text-gray-600 leading-relaxed">
@@ -139,7 +139,7 @@ export default function CompanyOverview() {
               <div className="mt-6 pt-6 border-t border-white/10 flex items-center gap-4 text-gray-400">
                 <div className="flex items-center gap-1.5 text-xs">
                   <Globe className="w-4 h-4 text-sky-400" />
-                  <span>Turkey-wide coverage</span>
+                  <span>Turkey wide coverage</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs">
                   <Users className="w-4 h-4 text-sky-400" />

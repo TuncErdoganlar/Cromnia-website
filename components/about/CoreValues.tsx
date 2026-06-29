@@ -32,7 +32,7 @@ const coreValues: string[] = [
   "Precision",
   "Innovation",
   "Time",
-  "Cost-effectiveness",
+  "Cost effectiveness",
   "Solution",
   "Quality",
   "Customer Satisfaction",

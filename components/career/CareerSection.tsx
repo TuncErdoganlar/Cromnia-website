@@ -28,7 +28,7 @@ const benefits = [
     title: "Professional Development",
     description:
       "Work on diverse Phase II–IV trials across therapeutic areas. " +
-      "Build your expertise in ICH/GCP-compliant research operations.",
+      "Build your expertise in ICH/GCP compliant research operations.",
   },
   {
     icon: Users,
@@ -79,12 +79,12 @@ export default function CareerSection() {
               <p>
                 We welcome individuals interested in sharing their experience,
                 developing their personal knowledge and skills, and becoming part
-                of a well-established, dynamic professional team.
+                of a well established, dynamic professional team.
               </p>
               <p>
                 Whether you are an experienced clinical research associate, a
                 regulatory affairs specialist, a medical writer, or a site
-                coordinator — we want to hear from you.
+                coordinator, we want to hear from you.
               </p>
             </div>
 

@@ -41,7 +41,7 @@ export default function ServicesPage() {
           </h1>
           <p className="text-content-on-inverted text-body-lg max-w-2xl">
             Comprehensive clinical research solutions covering every phase of your
-            trial — from initial site selection through final reporting.
+            trial, from initial site selection through final reporting.
           </p>
         </div>
       </div>

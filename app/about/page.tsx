@@ -25,7 +25,7 @@ import CoreValues from "@/components/about/CoreValues";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about CROMNIA — a Contract Research Organization established in 2009 " +
+    "Learn about CROMNIA, a Contract Research Organization established in 2009 " +
     "in Izmir, Turkey. Discover our mission, vision, and core values.",
 };
 
@@ -54,7 +54,7 @@ export default function AboutPage() {
           </h1>
           <p className="text-content-on-inverted text-body-lg max-w-2xl">
             A Contract Research Organization committed to reliable data,
-            ICH/GCP compliance, and flexible service delivery — since 2009.
+            ICH/GCP compliance, and flexible service delivery since 2009.
           </p>
         </div>
       </div>

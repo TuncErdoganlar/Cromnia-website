@@ -67,7 +67,7 @@ export default function MissionSection() {
 
             <p className="text-slate-400 leading-relaxed">
               To provide reliable data with the highest quality of our flexible and
-              more cost-effective services on time, in accordance with requirements of
+              more cost effective services on time, in accordance with requirements of
               Regulatory Authorities and with provisions of ICH/GCP.
             </p>
           </div>
@@ -91,9 +91,9 @@ export default function MissionSection() {
             <div className="w-full h-0.5 bg-gradient-to-r from-blue-400 to-transparent rounded-full mb-6" />
 
             <p className="text-slate-400 leading-relaxed">
-              To develop and provide a wide range of clinical research services —
+              To develop and provide a wide range of clinical research services,
               from study design through site monitoring and administration to data
-              analysis and medical writing — in compliance with clinical research
+              analysis and medical writing, in compliance with clinical research
               requirements and working to the highest international professional
               and ethical standards.
             </p>

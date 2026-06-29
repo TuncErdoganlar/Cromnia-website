@@ -54,7 +54,7 @@ export default function ServicesList() {
             Need a custom service package?
           </h3>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-            Our team can design flexible, cost-effective solutions tailored to the
+            Our team can design flexible, cost effective solutions tailored to the
             specific requirements of your clinical research project.
           </p>
           <Button href="/contact" variant="primary" className="inline-flex items-center gap-2">

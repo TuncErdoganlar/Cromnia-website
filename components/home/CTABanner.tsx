@@ -43,7 +43,7 @@ export default function CTABanner() {
             <span className="text-gradient-brand pb-1 inline-block">confidence</span>
           </h2>
           <p className="mt-4 text-slate-300 text-base md:text-lg max-w-2xl mx-auto">
-            From feasibility to final report — let&apos;s discuss how CROMNIA can support
+            From feasibility to final report, let&apos;s discuss how CROMNIA can support
             your next clinical research program in Turkey.
           </p>
 

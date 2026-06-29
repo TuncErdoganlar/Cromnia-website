@@ -143,7 +143,7 @@ function SampleTube({
                  rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
       role={interactive ? "slider" : undefined}
       aria-hidden={interactive ? undefined : true}
-      aria-label={interactive ? `${label} — drag to set liquid level` : undefined}
+      aria-label={interactive ? `${label}: drag to set liquid level` : undefined}
       aria-orientation={interactive ? "vertical" : undefined}
       aria-valuemin={interactive ? 0 : undefined}
       aria-valuemax={interactive ? 100 : undefined}
@@ -339,7 +339,7 @@ export default function ServicesScroller() {
           <h2 className="text-h2 text-white mt-1">Our Services</h2>
           <div aria-hidden="true" className="mt-3 h-1 w-16 rounded-pill bg-brand-accent" />
           <p className="mt-4 text-sm text-slate-400">
-            Drag any tube up or down to set its liquid level — swipe the rack sideways to browse.
+            Drag any tube up or down to set its liquid level. Swipe the rack sideways to browse.
           </p>
         </div>
 
@@ -364,7 +364,7 @@ export default function ServicesScroller() {
             <div
               ref={trackRef}
               role="region"
-              aria-label="Services sample rack — scroll horizontally to browse; drag a tube up or down to set its level"
+              aria-label="Services sample rack: scroll horizontally to browse; drag a tube up or down to set its level"
               tabIndex={0}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
