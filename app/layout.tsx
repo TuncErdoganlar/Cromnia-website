@@ -35,7 +35,7 @@ const inter = Inter({
 // `metadataBase` resolves relative URLs in openGraph.images, etc.
 // Replace the placeholder when the production domain is final.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://cromnia.com.tr"),
+  metadataBase: new URL("https://www.cromnia.com.tr"),
   title: {
     template: "%s | CROMNIA",
     default: "CROMNIA | Contract Research Organization",

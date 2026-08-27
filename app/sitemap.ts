@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://cromnia.com.tr";
+const BASE_URL = "https://www.cromnia.com.tr";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["", "/about", "/services", "/career", "/contact"];
