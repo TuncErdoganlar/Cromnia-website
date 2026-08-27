@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://cromnia.com/sitemap.xml",
+    sitemap: "https://cromnia.com.tr/sitemap.xml",
   };
 }

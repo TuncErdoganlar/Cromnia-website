@@ -63,8 +63,8 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "CROMNIA",
-  url: "https://cromnia.com",
-  logo: "https://cromnia.com/cromnia-logo-color.png",
+  url: "https://cromnia.com.tr",
+  logo: "https://cromnia.com.tr/cromnia-logo-color.png",
   description:
     "CROMNIA is a Contract Research Organization (CRO) based in Izmir, Turkey, " +
     "providing clinical trial management, regulatory affairs, and medical writing services.",
