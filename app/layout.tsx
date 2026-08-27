@@ -71,6 +71,9 @@ export const metadata: Metadata = {
   authors: [{ name: "CROMNIA" }],
   // Generator hint can leak Next.js version — turn off in production
   generator: undefined,
+  verification: {
+    google: "6r6ONjMToR3OmvkbrBScHgv08_lag7YfhnPKZ-roiI4",
+  },
 };
 
 // ── VIEWPORT ─────────────────────────────────────────────────────────────────
