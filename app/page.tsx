@@ -57,6 +57,24 @@ export const metadata: Metadata = {
  * 3. Services → All 7 services in a preview grid
  * 4. Why Us  → Key differentiators (dark section)
  */
+// Organization structured data (JSON-LD) — tells Google what "CROMNIA" is
+// as an entity, which helps the brand name resolve to this site in search.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "CROMNIA",
+  url: "https://cromnia.com",
+  logo: "https://cromnia.com/cromnia-logo-color.png",
+  description:
+    "CROMNIA is a Contract Research Organization (CRO) based in Izmir, Turkey, " +
+    "providing clinical trial management, regulatory affairs, and medical writing services.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Izmir",
+    addressCountry: "TR",
+  },
+};
+
 export default function HomePage() {
   return (
     <>
@@ -65,6 +83,10 @@ export default function HomePage() {
        * wrapping them in an extra <div>. This keeps the DOM clean —
        * no unnecessary wrapper elements in the HTML output.
        */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
       <HeroSection />
       <MissionSection />
       <StatsCounter />
